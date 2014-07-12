@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>nuPickers.FlickrPickers</RootNamespace>
-    <AssemblyName>uComponents.nuPickers.FlickrPickers</AssemblyName>
+    <AssemblyName>nuPickers.FlickrPickers</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -197,6 +197,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseFlickrPicker.cs" />
+    <Compile Include="TextSearch.cs" />
+    <Compile Include="UserTags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
