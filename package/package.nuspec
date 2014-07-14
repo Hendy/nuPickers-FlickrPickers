@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>nuPickers</id>
+    <id>nuPickers-FlickrPickers</id>
     <version>0.0.0</version>
     <title>nuPickers Flickr Pickers</title>
-    <tags>Umbraco, Flickr</tags>
+    <tags>Umbraco, nuPickers, Flickr</tags>
     <authors>Hendy Racher</authors>
     <owners>The Umbraco Community</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
