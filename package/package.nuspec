@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>nuPickers</id>
+    <version>0.0.0</version>
+    <title>nuPickers Flickr Pickers</title>
+    <tags>Umbraco, Flickr</tags>
+    <authors>Hendy Racher</authors>
+    <owners>The Umbraco Community</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/uComponents/nuPickers</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/Hendy/nuPickers-FlickrPickers/master/package/icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary />
+    <description><![CDATA[nuPickers FlickrPickers is DotNet DataSource for Umbraco nuPickers]]></description>
+    <copyright />
+    <dependencies>
+      <dependency id="nuPickers" version="1.1.4" />
+    </dependencies>
+  </metadata>
+  <files />
+</package>
