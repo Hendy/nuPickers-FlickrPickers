@@ -5,6 +5,10 @@ namespace nuPickers.FlickrPickers
     using FlickrNet;
     using nuPickers.Shared.DotNetDataSource;
 
+    /// <summary>
+    /// Implementing IDotNetDataSource, enables this class to be used with any "nuPicker: DotNet ... Picker"
+    /// Implementing IDotNetDataSourceTypeahead, enables this class to recieve any typeahead text from a "nuPicker DotNet TypeaheadList Picker"
+    /// </summary>
     public class PhotoSearch : IDotNetDataSource, IDotNetDataSourceTypeahead
     {
         [DotNetDataSource(Title="Flickr API Key")]
