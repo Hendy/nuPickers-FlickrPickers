@@ -13,7 +13,7 @@ namespace nuPickers.FlickrPickers
         [DotNetDataSource(Title="Flickr API Secret")]
         public string Secret { get; set; }
 
-        [DotNetDataSource(Title="Max Photos", Description="maximum number of photos to return (0 means no limit)")]
+        [DotNetDataSource(Title="Max Photos", Description="maximum number of photos to return (defaults to 100)")]
         public string MaxPhotos { get; set; }
 
         [DotNetDataSource(Description="comma delimited list of tags")]
@@ -27,6 +27,9 @@ namespace nuPickers.FlickrPickers
         /// </summary>
         string IDotNetDataSourceTypeahead.Typeahead { get; set; }
 
+        /// <summary>
+        /// Helper to get at the Typeahead value
+        /// </summary>
         private string Typeahead
         {
             get
@@ -36,9 +39,9 @@ namespace nuPickers.FlickrPickers
         }
 
         /// <summary>
-        /// Main method called from the DotNetDataSource
+        /// This is the main method called from the DotNetDataSource
         /// </summary>
-        /// <returns>Collection of key / labels for the picker</returns>
+        /// <returns>a collection of key / labels for the picker</returns>
         IEnumerable<KeyValuePair<string, string>> IDotNetDataSource.GetEditorDataItems()
         {
             // prepare collection to return
@@ -68,10 +71,10 @@ namespace nuPickers.FlickrPickers
                 photoSearchOptions.Username = this.Username;
             }
 
+            // if being used by a typeahead picker...
             if (!string.IsNullOrWhiteSpace(this.Typeahead))
             {
                 photoSearchOptions.Text = this.Typeahead;
-
             }
 
             PhotoCollection photoCollection;
@@ -93,9 +96,10 @@ namespace nuPickers.FlickrPickers
             {
                 foreach (var photo in photoCollection)
                 {
-                    // build an item for the picker, appending flickr data into data-attributes within the label (these could then be parsed by a Custom Label)
+                    // build an item for the picker, appending flickr data into data-attributes within the label (these could then be parsed by a Custom Label macro)
                     photos.Add(new KeyValuePair<string, string>(photo.PhotoId, "<span data-originalUrl='" + photo.OriginalUrl + @"'>
-                                                                                <img src='" + photo.SquareThumbnailUrl + "' /></span>"));
+                                                                                    <img src='" + photo.SquareThumbnailUrl + @"' />
+                                                                                </span>"));
                 }
             }
 
