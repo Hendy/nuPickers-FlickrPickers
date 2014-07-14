@@ -197,9 +197,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseFlickrPicker.cs" />
-    <Compile Include="TextSearch.cs" />
-    <Compile Include="UserTags.cs" />
+    <Compile Include="PhotoSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
