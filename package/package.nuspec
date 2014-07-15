@@ -8,15 +8,15 @@
     <authors>Hendy Racher</authors>
     <owners>The Umbraco Community</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
-    <projectUrl>https://github.com/uComponents/nuPickers</projectUrl>
+    <projectUrl>https://github.com/Hendy/nuPickers-FlickrPickers</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/Hendy/nuPickers-FlickrPickers/master/package/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary />
-    <description><![CDATA[nuPickers FlickrPickers is DotNet DataSource for Umbraco nuPickers]]></description>
+    <description><![CDATA[nuPickers FlickrPickers is a DotNet DataSource for Umbraco nuPickers]]></description>
     <copyright />
     <dependencies>
       <dependency id="nuPickers" version="1.1.4" />
-      <dependecny id="FlickrNet" version="3.13.0" />
+      <dependency id="FlickrNet" version="3.13.0" />
     </dependencies>
   </metadata>
   <files />
