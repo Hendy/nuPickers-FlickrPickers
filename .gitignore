@@ -4,3 +4,4 @@ source/nuPickers-FlickrPickers/bin/
 source/packages/
 source/nuPickers-FlickrPickers/nuPickers-FlickrPickers.csproj.user
 *.nupkg
+source/nuPickers-FlickrPickers/FlickrNet.chm
