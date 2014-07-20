@@ -11,10 +11,10 @@ namespace nuPickers.FlickrPickers
     /// </summary>
     public class PhotoSearch : IDotNetDataSource, IDotNetDataSourceTypeahead
     {
-        [DotNetDataSource(Title="Flickr API Key")]
+        [DotNetDataSource(Title="Flickr API Key", Description="(required)")]
         public string Key { get; set; }
 
-        [DotNetDataSource(Title="Flickr API Secret")]
+        [DotNetDataSource(Title="Flickr API Secret", Description="(required)")]
         public string Secret { get; set; }
 
         [DotNetDataSource(Title="Max Photos", Description="maximum number of photos to return (defaults to 100)")]
@@ -24,7 +24,7 @@ namespace nuPickers.FlickrPickers
         public string Tags { get; set; }
 
         [DotNetDataSource(Title="Flickr Username", Description="photos from this this user")]
-        public string Username { get; set; }
+        public string Username { get; set; }  
 
         /// <summary>
         /// The current typeahead text (this is only set if using a DotNet TypeaheadList Picker)
