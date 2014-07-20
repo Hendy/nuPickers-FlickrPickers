@@ -224,6 +224,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PhotoSearch.cs" />
+    <Compile Include="PickerExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
