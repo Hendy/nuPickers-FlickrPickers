@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<umbPackage>
+  <info>
+    <package>
+      <name>nuPickers Flickr Pickers</name>
+      <version>0.0.0</version>
+      <license url="http://opensource.org/licenses/MIT">MIT license</license>
+      <url>https://github.com/Hendy/nuPickers-FlickrPickers</url>
+      <requirements>
+        <major>0</major>
+        <minor>0</minor>
+        <patch>0</patch>
+      </requirements>
+    </package>
+    <author>
+      <name>Hendy Racher</name>
+      <website>https://github.com/Hendy/nuPickers-FlickrPickers/graphs/contributors</website>
+    </author>
+    <readme><![CDATA[nuPickers FlickrPickers is DotNet DataSource for Umbraco nuPickers]]></readme>
+  </info>
+  <DocumentTypes />
+  <Templates />
+  <Stylesheets />
+  <Macros />
+  <DictionaryItems />
+  <Languages />
+  <DataTypes />
+  <control />
+  <Actions />
+  <files />
+</umbPackage>

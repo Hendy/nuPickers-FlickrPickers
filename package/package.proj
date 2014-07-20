@@ -5,6 +5,7 @@
   <!-- PROPERTIES -->
   <PropertyGroup>
     <PackageVersion>0.1.1</PackageVersion>
+    <MinUmbracoVersion>7.1.0</MinUmbracoVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -13,15 +14,18 @@
     <SourceDir>$(RootDir)\source</SourceDir>
     <ProjectDir>$(RootDir)\source\nuPickers-FlickrPickers</ProjectDir>
     <WorkingDir>$(PackageDir)\temp</WorkingDir>
+    <WorkingUmbracoDir>$(PackageDir)\temp\Umbraco</WorkingUmbracoDir>
     <WorkingNuGetDir>$(PackageDir)\temp\NuGet</WorkingNuGetDir>
   </PropertyGroup>
 
   <!-- IMPORTS -->
   <Import Project="$(PackageDir)\MSBuildTasks\MSBuild.Community.Tasks.Targets" />
+  <Import Project="$(PackageDir)\MSBuildTasks\MSBuild.Umbraco.Tasks.Targets" />
   <Import Project="$(PackageDir)\MSBuildTasks\MSBuild.NuGet.Tasks.Targets" />
 
   <Target Name="Start">
     <Message Text="Package version: $(PackageVersion)" />
+    <Message Text="Minimum Umbraco version: $(MinUmbracoVersion)" />
   </Target>
 
   <!-- UPDATE PROJECT ASSEMBLEY VERSION -->
@@ -39,7 +43,12 @@
   <Target Name="PrepareWorkingDir" DependsOnTargets="Compile">
     <RemoveDir Directories="$(WorkingDir)" Condition="Exists('$(WorkingDir)')" />
     <MakeDir Directories="$(WorkingDir)" />
-    
+
+    <!--- COPY FOR UMBRACO PACKAGE -->
+    <Copy SourceFiles="$(ProjectDir)\bin\Release\nuPickers.FlickrPickers.dll" DestinationFolder="$(WorkingUmbracoDir)\bin\" />
+    <Copy SourceFiles="$(ProjectDir)\bin\Release\FlickrNet.dll" DestinationFolder="$(WorkingUmbracoDir)\bin\" />
+    <Copy SourceFiles="$(PackageDir)\package.xml" DestinationFolder="$(WorkingUmbracoDir)\" />
+
     <!-- COPY FOR NUGET PACKAGE -->
     <Copy SourceFiles="$(ProjectDir)\bin\Release\nuPickers.FlickrPickers.dll" DestinationFolder="$(WorkingNugetDir)\lib\net45\" />
     <Copy SourceFiles="$(PackageDir)\package.nuspec" DestinationFolder="$(WorkingNuGetDir)\" />
@@ -48,9 +57,17 @@
   <!-- UPDATE MANIFESTS -->
   <Target Name="UpdateManifests" DependsOnTargets="PrepareWorkingDir">    
     <ItemGroup>
+      <UmbracoManifestFiles Include="$(WorkingUmbracoDir)\**\*.*" Exclude="$(WorkingUmbracoDir)\package.xml" />
       <NuGetManifestFiles Include="$(WorkingNuGetDir)\**\*.*" Exclude="$(WorkingNuGetDir)\package.nuspec" />
     </ItemGroup>
-        
+
+    <MSBuild.Umbraco.Tasks.ManifestUpdate
+      ManifestFile="$(WorkingUmbracoDir)\package.xml"
+      WorkingDirectory="$(WorkingUmbracoDir)"
+      MinimumRequiredUmbracoVersion="$(MinUmbracoVersion)"
+      PackageVersion="$(PackageVersion)"
+      Files="@(UmbracoManifestFiles)" />
+
     <MSBuild.NuGet.Tasks.ManifestUpdate
      ManifestFile="$(WorkingNugetDir)\package.nuspec"
      WorkingDirectory="$(WorkingNugetDir)"
@@ -61,7 +78,16 @@
 
   <!-- PACKAGE -->
   <Target Name="Package" DependsOnTargets="UpdateManifests">
-    
+    <ItemGroup>
+      <UmbracoPackageFiles Include="$(WorkingUmbracoDir)\**\*.*" />
+    </ItemGroup>
+
+    <MSBuild.Umbraco.Tasks.Package
+      ManifestFile="$(WorkingUmbracoDir)\package.xml"
+      WorkingDirectory="$(WorkingUmbracoDir)\"
+      OutputDirectory="$(PackageDir)\"
+      Files="@(UmbracoPackageFiles)" />
+
     <MSBuild.NuGet.Tasks.Pack 
       NuGetExePath="$(SourceDir)\.nuget\NuGet.exe"
 			ManifestFile="$(WorkingNuGetDir)\package.nuspec"

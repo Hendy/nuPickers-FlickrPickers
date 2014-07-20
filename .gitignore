@@ -3,3 +3,4 @@ source/nuPickers-FlickrPickers.v12.suo
 source/nuPickers-FlickrPickers/bin/
 source/packages/
 source/nuPickers-FlickrPickers/nuPickers-FlickrPickers.csproj.user
+*.nupkg
