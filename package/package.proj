@@ -45,12 +45,12 @@
     <MakeDir Directories="$(WorkingDir)" />
 
     <!--- COPY FOR UMBRACO PACKAGE -->
-    <Copy SourceFiles="$(ProjectDir)\bin\Release\nuPickers.FlickrPickers.dll" DestinationFolder="$(WorkingUmbracoDir)\bin\" />
-    <Copy SourceFiles="$(ProjectDir)\bin\Release\FlickrNet.dll" DestinationFolder="$(WorkingUmbracoDir)\bin\" />
+    <Copy SourceFiles="$(ProjectDir)\bin\nuPickers.FlickrPickers.dll" DestinationFolder="$(WorkingUmbracoDir)\bin\" />
+    <Copy SourceFiles="$(ProjectDir)\bin\FlickrNet.dll" DestinationFolder="$(WorkingUmbracoDir)\bin\" />
     <Copy SourceFiles="$(PackageDir)\package.xml" DestinationFolder="$(WorkingUmbracoDir)\" />
 
     <!-- COPY FOR NUGET PACKAGE -->
-    <Copy SourceFiles="$(ProjectDir)\bin\Release\nuPickers.FlickrPickers.dll" DestinationFolder="$(WorkingNugetDir)\lib\net45\" />
+    <Copy SourceFiles="$(ProjectDir)\bin\nuPickers.FlickrPickers.dll" DestinationFolder="$(WorkingNugetDir)\lib\net45\" />
     <Copy SourceFiles="$(PackageDir)\package.nuspec" DestinationFolder="$(WorkingNuGetDir)\" />
   </Target>
 

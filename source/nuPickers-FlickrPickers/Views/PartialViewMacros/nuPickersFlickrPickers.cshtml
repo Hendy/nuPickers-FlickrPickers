@@ -1,0 +1,7 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using nuPickers.FlickrPickers;
+@using FlickrNet;
+
+
+@* TODO: re-use the PickerExtension to get PhotoInfo obj from key (TODO: cache option for PhotoInfo & Keys so don't have to hit Flickr) *@
+@Html.Raw(Model.MacroParameters["label"])
