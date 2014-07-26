@@ -178,7 +178,7 @@
       <HintPath>..\packages\UmbracoCms.Core.7.1.3\lib\TidyNet.dll</HintPath>
     </Reference>
     <Reference Include="uComponents.nuPickers">
-      <HintPath>..\packages\nuPickers.1.1.7\lib\net45\uComponents.nuPickers.dll</HintPath>
+      <HintPath>..\packages\nuPickers.1.2.0\lib\net45\uComponents.nuPickers.dll</HintPath>
     </Reference>
     <Reference Include="umbraco">
       <HintPath>..\packages\UmbracoCms.Core.7.1.3\lib\umbraco.dll</HintPath>
