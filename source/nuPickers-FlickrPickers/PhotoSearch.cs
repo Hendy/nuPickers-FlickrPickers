@@ -100,12 +100,7 @@ namespace nuPickers.FlickrPickers
             {
                 foreach (var photo in photoCollection)
                 {
-                    // build an item for the picker, appending flickr data into data-attributes within the label (these could then be parsed by a Custom Label macro)
-                    photos.Add(new KeyValuePair<string, string>(photo.PhotoId, "<span data-original-url='" + photo.OriginalUrl + @"'
-                                                                                      data-owner-name='" + photo.OwnerName + @"'
-                                                                                      data-title='" + photo.Title + @"'>
-                                                                                    <img src='" + photo.LargeSquareThumbnailUrl + @"' />
-                                                                                </span>"));
+                    photos.Add(new KeyValuePair<string, string>(photo.PhotoId, "<img src='" + photo.SquareThumbnailUrl + "' />"));
                 }
             }
 

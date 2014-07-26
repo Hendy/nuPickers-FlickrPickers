@@ -2,9 +2,8 @@
 {
     using FlickrNet;
     using Newtonsoft.Json.Linq;
-    using nuPickers.PropertyValueConverters;
+    using nuPickers;
     using nuPickers.Shared.DotNetDataSource;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -15,31 +14,26 @@
         /// </summary>
         /// <param name="picker">the nuPicker Picker</param>
         /// <returns>a collection of FlickrNet.PhotoInfo objects</returns>
-        public static IEnumerable<PhotoInfo> GetPhotoInfos(this Picker picker)
+        public static IEnumerable<PhotoInfo> GetPickedPhotoInfos(this Picker picker)
         {
             List<PhotoInfo> photoInfos = new List<PhotoInfo>();
 
-            DotNetDataSource dotNetDataSource = 
-                JObject.Parse(picker.DataTypePreValues.Single(x => string.Equals(x.Key, "dataSource", StringComparison.InvariantCultureIgnoreCase)).Value.Value)
-                .ToObject<DotNetDataSource>();
-
-            try
+            foreach (string pickedKey in picker.PickedKeys)
             {
-                Flickr.CacheDisabled = true;
-                Flickr flickr = new Flickr(dotNetDataSource.Properties.Single(x => string.Equals(x.Name, "Key")).Value,
-                                           dotNetDataSource.Properties.Single(x => string.Equals(x.Name, "Secret")).Value);
-                flickr.InstanceCacheDisabled = true;
-
-                foreach (string pickedKey in picker.PickedKeys)
-                {
-                    photoInfos.Add(flickr.PhotosGetInfo(pickedKey));
-                }
+                photoInfos.Add(picker.GetPhotoInfo(pickedKey));
             }
-            catch
-            {
-            }
-
+         
             return photoInfos;
+        }
+
+        public static PhotoInfo GetPhotoInfo(this Picker picker, string key)
+        {
+            DotNetDataSource dotNetDataSource = JObject.Parse(picker.GetDataTypePreValue("dataSource").Value).ToObject<DotNetDataSource>();
+
+            string apiKey = dotNetDataSource.Properties.Single(x => x.Name == "Key").Value;
+            string apiSecret = dotNetDataSource.Properties.Single(x => x.Name == "Secret").Value;
+
+            return FlickrManager.GetFlickrConnection(apiKey, apiSecret).PhotosGetInfo(key);
         }
     }
 }
