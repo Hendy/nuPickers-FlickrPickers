@@ -1,14 +1,50 @@
 ﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
-@using nuPickers;
-@using nuPickers.FlickrPickers;
-
+@using nuPickers; @* Picker obj *@
+@using nuPickers.FlickrPickers; @* extension methods on Picker obj *@
 @{
+    /*
+     * Optional Macro Parameters:
+     *      
+     *  contextId       - the current document / media or member being edited
+     *  propertyAlias   - the property alias of the picker
+     *  key             - the key value of the current item being processed
+     *  label           - the label value of the current item being processed
+     *  keys            - the full collection of all item keys
+     *  counter         - the index of the current item being processed
+     *  total           - the total number of items
+     * 
+     */
+
+    // This example uses three Macro parameters:
     int contextId = int.Parse(Model.MacroParameters["contextId"].ToString());
     string propertyAlias = Model.MacroParameters["propertyAlias"].ToString();
-    string key = Model.MacroParameters["key"].ToString();    
+    string key = Model.MacroParameters["key"].ToString();
 
-    FlickrImage flickrImage = new Picker(contextId, propertyAlias).GetFlickrImage(key);
+    // The contextId and propertyAlias can be used to identify the current picker
+    Picker picker = new Picker(contextId, propertyAlias);
     
+    // using the FlickrPicker specific extension method, get the current FlickrImage
+    FlickrImage flickrImage = picker.GetFlickrImage(key);
+    
+    /*
+     * FlickrImage Properties:
+     * 
+     *  PhotoId
+     *  DateTaken
+     *  DateUploaded
+     *  Title
+     *  Description
+     *  OriginalUrl
+     *  LargeUrl
+     *  MediumUrl
+     *  SmallUrl
+     *  ThumbnailUrl
+     *  SquareThumbnailUrl
+     *  WebUrl
+     * 
+     */
+        
     <img src="@flickrImage.ThumbnailUrl" />
-    <p>@key</p>    
+    <h4>@flickrImage.Title</h4>
+    <h5>@flickrImage.DateTaken.ToShortDateString()</h5>  
 }
