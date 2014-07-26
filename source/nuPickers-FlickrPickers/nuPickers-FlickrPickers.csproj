@@ -224,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FlickrConnection.cs" />
+    <Compile Include="FlickrImage.cs" />
     <Compile Include="FlickrManager.cs" />
     <Compile Include="PhotoSearch.cs" />
     <Compile Include="PickerExtensions.cs" />
