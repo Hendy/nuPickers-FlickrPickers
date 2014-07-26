@@ -1,6 +1,7 @@
 ﻿namespace nuPickers.FlickrPickers
 {
     using FlickrNet;
+    using System.Collections.Generic;
     using System.Runtime.Caching;
 
     internal sealed class FlickrConnection
@@ -11,6 +12,8 @@
 
         private Flickr Flickr { get; set; }
 
+        private MemoryCache MemoryCache { get; set; }
+
         internal FlickrConnection(string apiKey, string apiSecret)
         {
             this.ApiKey = apiKey;
@@ -18,23 +21,43 @@
 
             this.Flickr = new Flickr(this.ApiKey, this.ApiSecret);
             this.Flickr.InstanceCacheDisabled = true;
+
+            this.MemoryCache = new MemoryCache(this.ApiKey + this.ApiSecret);            
         }
 
-        internal PhotoInfo PhotosGetInfo(string key)
+        internal IEnumerable<FlickrImage> GetFlickrImages(PhotoSearchOptions photoSearchOptions)
         {
-            string cacheKey = this.ApiKey + key;
-            PhotoInfo photoInfo = null;
-            ObjectCache cache = MemoryCache.Default;
+            List<FlickrImage> flickrImages = new List<FlickrImage>();
 
-            if (!cache.Contains(cacheKey))
+            PhotoCollection photoCollection = this.Flickr.PhotosSearch(photoSearchOptions);
+
+            foreach (Photo photo in photoCollection)
             {
-                photoInfo = this.Flickr.PhotosGetInfo(key);
-                cache.Add(
-                        new CacheItem(cacheKey, photoInfo),
-                        new CacheItemPolicy() { SlidingExpiration = new System.TimeSpan(0, 1, 0) });
+                flickrImages.Add(this.CacheFlickrImage((FlickrImage)photo));
             }
 
-            return cache.Get(cacheKey) as PhotoInfo;
+            return flickrImages; 
+        }
+
+        internal FlickrImage GetFlickrImage(string key)
+        {
+            FlickrImage flickrImage = this.MemoryCache.Get(key) as FlickrImage;
+
+            if (flickrImage == null)
+            {
+                flickrImage = this.CacheFlickrImage((FlickrImage)this.Flickr.PhotosGetInfo(key));
+            }
+
+            return flickrImage;
+        }
+
+        private FlickrImage CacheFlickrImage(FlickrImage flickrImage)
+        {
+            this.MemoryCache.Set(
+                new CacheItem(flickrImage.PhotoId, flickrImage),
+                new CacheItemPolicy() { SlidingExpiration = new System.TimeSpan(0, 30, 0) });
+               
+            return flickrImage;
         }
     }
 }

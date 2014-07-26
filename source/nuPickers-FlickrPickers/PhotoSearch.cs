@@ -1,6 +1,7 @@
 ﻿
 namespace nuPickers.FlickrPickers
 {
+    using System.Linq;
     using System.Collections.Generic;
     using FlickrNet;
     using nuPickers.Shared.DotNetDataSource;
@@ -48,9 +49,6 @@ namespace nuPickers.FlickrPickers
         /// <returns>a collection of key / labels for the picker</returns>
         IEnumerable<KeyValuePair<string, string>> IDotNetDataSource.GetEditorDataItems()
         {
-            // prepare collection to return
-            List<KeyValuePair<string, string>> photos = new List<KeyValuePair<string, string>>();     
-
             // begin query
             PhotoSearchOptions photoSearchOptions = new PhotoSearchOptions();            
             photoSearchOptions.MediaType = MediaType.Photos;
@@ -81,30 +79,9 @@ namespace nuPickers.FlickrPickers
                 photoSearchOptions.Text = this.Typeahead;
             }
 
-            PhotoCollection photoCollection;
-
-            try
-            {
-                Flickr.CacheDisabled = true;
-                Flickr flickr = new Flickr(this.Key, this.Secret);
-                flickr.InstanceCacheDisabled = true;
-
-                photoCollection = flickr.PhotosSearch(photoSearchOptions);
-            }
-            catch
-            {
-                photoCollection = null;
-            }
-
-            if (photoCollection != null)
-            {
-                foreach (var photo in photoCollection)
-                {
-                    photos.Add(new KeyValuePair<string, string>(photo.PhotoId, "<img src='" + photo.SquareThumbnailUrl + "' />"));
-                }
-            }
-
-            return photos;
+            return FlickrManager.GetFlickrConnection(this.Key, this.Secret)
+                                .GetFlickrImages(photoSearchOptions)
+                                .Select(x => new KeyValuePair<string, string>(x.PhotoId, "<img src='" + x.SquareThumbnailUrl + "' />"));
         }
 
     }

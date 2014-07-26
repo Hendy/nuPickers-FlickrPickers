@@ -14,26 +14,26 @@
         /// </summary>
         /// <param name="picker">the nuPicker Picker</param>
         /// <returns>a collection of FlickrNet.PhotoInfo objects</returns>
-        public static IEnumerable<PhotoInfo> GetPickedPhotoInfos(this Picker picker)
+        public static IEnumerable<FlickrImage> GetPickedFlickrImages(this Picker picker)
         {
-            List<PhotoInfo> photoInfos = new List<PhotoInfo>();
+            List<FlickrImage> flickrImages = new List<FlickrImage>();
 
             foreach (string pickedKey in picker.PickedKeys)
             {
-                photoInfos.Add(picker.GetPhotoInfo(pickedKey));
+                flickrImages.Add(picker.GetFlickrImage(pickedKey));
             }
-         
-            return photoInfos;
+
+            return flickrImages;
         }
 
-        public static PhotoInfo GetPhotoInfo(this Picker picker, string key)
+        public static FlickrImage GetFlickrImage(this Picker picker, string key)
         {
             DotNetDataSource dotNetDataSource = JObject.Parse(picker.GetDataTypePreValue("dataSource").Value).ToObject<DotNetDataSource>();
 
             string apiKey = dotNetDataSource.Properties.Single(x => x.Name == "Key").Value;
             string apiSecret = dotNetDataSource.Properties.Single(x => x.Name == "Secret").Value;
 
-            return FlickrManager.GetFlickrConnection(apiKey, apiSecret).PhotosGetInfo(key);
+            return FlickrManager.GetFlickrConnection(apiKey, apiSecret).GetFlickrImage(key);
         }
     }
 }

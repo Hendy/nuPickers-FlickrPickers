@@ -1,5 +1,4 @@
 ﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
-@using FlickrNet;
 @using nuPickers;
 @using nuPickers.FlickrPickers;
 
@@ -8,8 +7,8 @@
     string propertyAlias = Model.MacroParameters["propertyAlias"].ToString();
     string key = Model.MacroParameters["key"].ToString();    
 
-    PhotoInfo photoInfo = new Picker(contextId, propertyAlias).GetPhotoInfo(key);
+    FlickrImage flickrImage = new Picker(contextId, propertyAlias).GetFlickrImage(key);
     
-    <img src="@photoInfo.ThumbnailUrl" />
+    <img src="@flickrImage.ThumbnailUrl" />
     <p>@key</p>    
 }
