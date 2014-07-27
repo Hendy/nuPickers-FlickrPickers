@@ -22,40 +22,75 @@
             this.Flickr = new Flickr(this.ApiKey, this.ApiSecret);
             this.Flickr.InstanceCacheDisabled = true;
 
-            this.MemoryCache = new MemoryCache(this.ApiKey + this.ApiSecret);            
+            this.MemoryCache = new MemoryCache(this.ApiKey + this.ApiSecret);
         }
 
         internal IEnumerable<FlickrImage> GetFlickrImages(PhotoSearchOptions photoSearchOptions)
         {
             List<FlickrImage> flickrImages = new List<FlickrImage>();
 
-            PhotoCollection photoCollection = this.Flickr.PhotosSearch(photoSearchOptions);
-
-            foreach (Photo photo in photoCollection)
+            PhotoCollection photoCollection;
+            
+            try
             {
-                flickrImages.Add(this.CacheFlickrImage((FlickrImage)photo));
+                photoCollection = this.Flickr.PhotosSearch(photoSearchOptions);
+            }
+            catch
+            {
+                photoCollection = null;
+            }
+
+            if (photoCollection != null)
+            {
+                foreach (Photo photo in photoCollection)
+                {
+                    flickrImages.Add(this.CacheFlickrImage((FlickrImage)photo));
+                }
             }
 
             return flickrImages; 
         }
 
+        /// <summary>
+        /// Get FlickrImage from cache, otherwise request then add to cache
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         internal FlickrImage GetFlickrImage(string key)
         {
             FlickrImage flickrImage = this.MemoryCache.Get(key) as FlickrImage;
+            PhotoInfo photoInfo;
 
             if (flickrImage == null)
             {
-                flickrImage = this.CacheFlickrImage((FlickrImage)this.Flickr.PhotosGetInfo(key));
+                try
+                {
+                    photoInfo = this.Flickr.PhotosGetInfo(key);
+                }
+                catch
+                {
+                    photoInfo = null;
+                }
+
+                if (photoInfo != null)
+                {
+                    flickrImage = this.CacheFlickrImage((FlickrImage)photoInfo);    
+                }                
             }
 
             return flickrImage;
         }
 
+        /// <summary>
+        /// Add the flickrImage to the cache
+        /// </summary>
+        /// <param name="flickrImage"></param>
+        /// <returns></returns>
         private FlickrImage CacheFlickrImage(FlickrImage flickrImage)
         {
             this.MemoryCache.Set(
                 new CacheItem(flickrImage.PhotoId, flickrImage),
-                new CacheItemPolicy() { SlidingExpiration = new System.TimeSpan(0, 30, 0) });
+                new CacheItemPolicy() { SlidingExpiration = new System.TimeSpan(0, 5, 0) });
                
             return flickrImage;
         }
