@@ -1,6 +1,5 @@
 ﻿namespace nuPickers.FlickrPickers
 {
-    using FlickrNet;
     using Newtonsoft.Json.Linq;
     using nuPickers;
     using nuPickers.Shared.DotNetDataSource;

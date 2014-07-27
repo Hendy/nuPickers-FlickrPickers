@@ -2,6 +2,8 @@
 namespace nuPickers.FlickrPickers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using FlickrNet;
 
     /// <summary>
@@ -21,6 +23,8 @@ namespace nuPickers.FlickrPickers
 
         public string Description { get; internal set; }
 
+        public IEnumerable<string> Tags { get; set; }
+
         public string OriginalUrl { get; internal set; }
 
         public string LargeUrl { get; internal set; }
@@ -34,7 +38,6 @@ namespace nuPickers.FlickrPickers
         public string SquareThumbnailUrl { get; internal set; }
 
         public string WebUrl { get; internal set; }
-   
 
         public static explicit operator FlickrImage(Photo photo)
         {
@@ -45,6 +48,7 @@ namespace nuPickers.FlickrPickers
                 DateUploaded = photo.DateUploaded,
                 Title = photo.Title,
                 Description = photo.Description,
+                Tags = photo.Tags,
                 OriginalUrl = photo.OriginalUrl,
                 LargeUrl = photo.LargeUrl,
                 MediumUrl = photo.MediumUrl,
@@ -64,13 +68,14 @@ namespace nuPickers.FlickrPickers
                 DateUploaded = photoInfo.DateUploaded,
                 Title = photoInfo.Title,
                 Description = photoInfo.Description,
+                Tags = photoInfo.Tags.Select(x => x.TagText),
                 OriginalUrl = photoInfo.OriginalUrl,
                 LargeUrl = photoInfo.LargeUrl,
                 MediumUrl = photoInfo.MediumUrl,
                 SmallUrl = photoInfo.SmallUrl,
                 ThumbnailUrl = photoInfo.ThumbnailUrl,
                 SquareThumbnailUrl = photoInfo.SquareThumbnailUrl,
-                WebUrl = photoInfo.WebUrl
+                WebUrl = photoInfo.WebUrl                
             };
         }
     }

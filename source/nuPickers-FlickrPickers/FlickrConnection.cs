@@ -59,10 +59,11 @@
         internal FlickrImage GetFlickrImage(string key)
         {
             FlickrImage flickrImage = this.MemoryCache.Get(key) as FlickrImage;
-            PhotoInfo photoInfo;
-
+            
             if (flickrImage == null)
             {
+                PhotoInfo photoInfo;
+
                 try
                 {
                     photoInfo = this.Flickr.PhotosGetInfo(key);

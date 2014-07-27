@@ -7,7 +7,7 @@
     /// <summary>
     /// this is a singleton that handles returning the appropriate flickr api connection
     /// </summary>
-    internal sealed class FlickrManager
+    internal sealed class FlickrManager : MarshalByRefObject
     {
         private static readonly Lazy<FlickrManager> lazy = new Lazy<FlickrManager>(() => new FlickrManager());
 

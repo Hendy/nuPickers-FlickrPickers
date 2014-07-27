@@ -34,6 +34,7 @@
      *  DateUploaded
      *  Title
      *  Description
+     *  Tags
      *  OriginalUrl
      *  LargeUrl
      *  MediumUrl
@@ -46,5 +47,5 @@
         
     <img src="@flickrImage.ThumbnailUrl" />
     <h4>@flickrImage.Title</h4>
-    <h5>@flickrImage.DateTaken.ToShortDateString()</h5>  
+    <h5>@string.Join(", ", flickrImage.Tags)</h5>  
 }
