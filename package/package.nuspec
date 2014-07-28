@@ -15,7 +15,7 @@
     <description><![CDATA[nuPickers FlickrPickers is a DotNet DataSource for Umbraco nuPickers]]></description>
     <copyright />
     <dependencies>
-      <dependency id="nuPickers" version="1.2.0" />
+      <dependency id="nuPickers" version="1.2.1" />
       <dependency id="FlickrNet" version="3.13.0" />
     </dependencies>
   </metadata>
