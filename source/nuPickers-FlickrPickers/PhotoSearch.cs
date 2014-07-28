@@ -18,9 +18,6 @@ namespace nuPickers.FlickrPickers
         [DotNetDataSource(Title="Flickr API Secret", Description="(required)")]
         public string Secret { get; set; }
 
-        [DotNetDataSource(Title="Max Photos", Description="maximum number of photos to return (defaults to 100)")]
-        public string MaxPhotos { get; set; }
-
         [DotNetDataSource(Description="comma delimited list of tags")]
         public string Tags { get; set; }
 
@@ -56,12 +53,6 @@ namespace nuPickers.FlickrPickers
             photoSearchOptions.Extras |= PhotoSearchExtras.OriginalUrl;
             photoSearchOptions.Extras |= PhotoSearchExtras.Tags;
             photoSearchOptions.SortOrder = PhotoSearchSortOrder.Relevance;
-
-            int maxPhotos;
-            if (int.TryParse(this.MaxPhotos, out maxPhotos))
-            {
-                photoSearchOptions.PerPage = maxPhotos;
-            }
 
             if (!string.IsNullOrWhiteSpace(this.Tags))
             {

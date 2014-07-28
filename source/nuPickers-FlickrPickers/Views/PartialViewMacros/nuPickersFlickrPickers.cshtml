@@ -4,15 +4,15 @@
 @{
     /*
      * Optional Macro Parameters:
-     *      
-     *  contextId       - the current document / media or member being edited
-     *  propertyAlias   - the property alias of the picker
-     *  key             - the key value of the current item being processed
-     *  label           - the label value of the current item being processed
-     *  keys            - the full collection of all item keys
-     *  counter         - the index of the current item being processed
-     *  total           - the total number of items
-     * 
+     *
+     *  int     contextId       - the current document / media or member being edited
+     *  string  propertyAlias   - the property alias of the picker
+     *  string  key             - the key value of the current item being processed
+     *  string  label           - the label value of the current item being processed
+     *  string  keys            - the full collection of all item keys as a csv
+     *  int     counter         - the index of the current item being processed
+     *  int     total           - the total number of items
+     *
      */
 
     // This example uses three Macro parameters:
@@ -20,32 +20,32 @@
     string propertyAlias = Model.MacroParameters["propertyAlias"].ToString();
     string key = Model.MacroParameters["key"].ToString();
 
-    // The contextId and propertyAlias can be used to identify the current picker
-    Picker picker = new Picker(contextId, propertyAlias);
-    
-    // using the FlickrPicker specific extension method, get the current FlickrImage
+    // The contextId and propertyAlias are used to identify the current picker
+    Picker picker = new Picker(contextId, propertyAlias); // this is a generic nuPicker Picker obj (same as that returned by the PropertyValueConverter)
+
+    // FlickrPicker specific extension methods are used with the generic Picker obj
     FlickrImage flickrImage = picker.GetFlickrImage(key);
-    
+
     /*
      * FlickrImage Properties:
-     * 
-     *  PhotoId
-     *  DateTaken
-     *  DateUploaded
-     *  Title
-     *  Description
-     *  Tags
-     *  OriginalUrl
-     *  LargeUrl
-     *  MediumUrl
-     *  SmallUrl
-     *  ThumbnailUrl
-     *  SquareThumbnailUrl
-     *  WebUrl
-     * 
+     *
+     *  string              PhotoId
+     *  DateTime            DateTaken
+     *  DateTime            DateUploaded
+     *  string              Title
+     *  string              Description
+     *  IEnumerable<string> Tags
+     *  string              OriginalUrl
+     *  string              LargeUrl
+     *  string              MediumUrl
+     *  string              SmallUrl
+     *  string              ThumbnailUrl
+     *  string              SquareThumbnailUrl
+     *  string              WebUrl
+     *
      */
-        
+
     <img src="@flickrImage.ThumbnailUrl" />
     <h4>@flickrImage.Title</h4>
-    <h5>@string.Join(", ", flickrImage.Tags)</h5>  
+    <h5>@string.Join(", ", flickrImage.Tags)</h5>
 }
