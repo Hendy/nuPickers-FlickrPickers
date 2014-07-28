@@ -1,10 +1,10 @@
 ﻿
-namespace nuPickers.FlickrPickers
+namespace nuPickers.FlickrPickers.DataSources
 {
-    using System.Linq;
-    using System.Collections.Generic;
     using FlickrNet;
     using nuPickers.Shared.DotNetDataSource;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Implementing IDotNetDataSource, enables this class to be used with any "nuPicker: DotNet ... Picker"
@@ -12,17 +12,17 @@ namespace nuPickers.FlickrPickers
     /// </summary>
     public class PhotoSearch : IDotNetDataSource, IDotNetDataSourceTypeahead
     {
-        [DotNetDataSource(Title="Flickr API Key", Description="(required)")]
-        public string Key { get; set; }
+        [DotNetDataSource(Title = "Flickr API Key", Description = "(required)")]
+        public string ApiKey { get; set; }
 
-        [DotNetDataSource(Title="Flickr API Secret", Description="(required)")]
-        public string Secret { get; set; }
+        [DotNetDataSource(Title = "Flickr API Secret", Description = "(required)")]
+        public string ApiSecret { get; set; }
+
+        [DotNetDataSource(Title = "Flickr Username", Description = "photos from this this user")]
+        public string Username { get; set; }  
 
         [DotNetDataSource(Description="comma delimited list of tags")]
         public string Tags { get; set; }
-
-        [DotNetDataSource(Title="Flickr Username", Description="photos from this this user")]
-        public string Username { get; set; }  
 
         /// <summary>
         /// The current typeahead text (this is only set if using a DotNet TypeaheadList Picker)
@@ -71,7 +71,7 @@ namespace nuPickers.FlickrPickers
                 photoSearchOptions.Text = this.Typeahead;
             }
 
-            return FlickrManager.GetFlickrConnection(this.Key, this.Secret)
+            return FlickrManager.GetFlickrConnection(this.ApiKey, this.ApiSecret)
                                 .GetFlickrImages(photoSearchOptions)
                                 .Select(x => new KeyValuePair<string, string>(x.PhotoId, "<img src='" + x.SquareThumbnailUrl + "' />"));
         }

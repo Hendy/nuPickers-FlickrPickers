@@ -29,8 +29,8 @@
         {
             DotNetDataSource dotNetDataSource = JObject.Parse(picker.GetDataTypePreValue("dataSource").Value).ToObject<DotNetDataSource>();
 
-            string apiKey = dotNetDataSource.Properties.Single(x => x.Name == "Key").Value;
-            string apiSecret = dotNetDataSource.Properties.Single(x => x.Name == "Secret").Value;
+            string apiKey = dotNetDataSource.Properties.Single(x => x.Name == "ApiKey").Value;
+            string apiSecret = dotNetDataSource.Properties.Single(x => x.Name == "ApiSecret").Value;
 
             return FlickrManager.GetFlickrConnection(apiKey, apiSecret).GetFlickrImage(key);
         }

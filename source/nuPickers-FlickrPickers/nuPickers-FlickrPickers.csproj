@@ -223,10 +223,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSources\PhotoSet.cs" />
     <Compile Include="FlickrConnection.cs" />
     <Compile Include="FlickrImage.cs" />
     <Compile Include="FlickrManager.cs" />
-    <Compile Include="PhotoSearch.cs" />
+    <Compile Include="DataSources\PhotoSearch.cs" />
     <Compile Include="PickerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

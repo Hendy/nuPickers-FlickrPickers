@@ -15,16 +15,13 @@
      *
      */
 
-    // This example uses three Macro parameters:
-    int contextId = int.Parse(Model.MacroParameters["contextId"].ToString());
-    string propertyAlias = Model.MacroParameters["propertyAlias"].ToString();
-    string key = Model.MacroParameters["key"].ToString();
-
-    // The contextId and propertyAlias are used to identify the current picker
+    int contextId = int.Parse(Model.MacroParameters["contextId"].ToString()); // with propertyAlias, identifies current picker
+    string propertyAlias = Model.MacroParameters["propertyAlias"].ToString(); // with contextId, identifies current picker   
+    string key = Model.MacroParameters["key"].ToString(); // identifies the current item
+    
     Picker picker = new Picker(contextId, propertyAlias); // this is a generic nuPicker Picker obj (same as that returned by the PropertyValueConverter)
 
-    // FlickrPicker specific extension methods are used with the generic Picker obj
-    FlickrImage flickrImage = picker.GetFlickrImage(key);
+    FlickrImage flickrImage = picker.GetFlickrImage(key); // FlickrPicker specific extension methods are used with the generic Picker obj
 
     /*
      * FlickrImage Properties:

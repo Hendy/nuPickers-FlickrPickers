@@ -7,7 +7,7 @@ namespace nuPickers.FlickrPickers
     using FlickrNet;
 
     /// <summary>
-    /// Flickr API returns different objects for a photo serach (a collection of Photo objects), and getting a single photo (a PhotoInfo obj)
+    /// Flickr API returns different objects for a photo serach (a collection of Photo objects), and getting a single photo (a PhotoInfo object)
     /// This class is used to present a common type (as Photo and PhotoInfo are subtly different and cannot be converted either way)
     /// https://flickrnet.codeplex.com/discussions/280102
     /// </summary>

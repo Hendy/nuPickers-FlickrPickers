@@ -14,6 +14,19 @@
 
         private MemoryCache MemoryCache { get; set; }
 
+        private PhotoSearchExtras DefaultPhotoSearchExtras
+        {
+            get
+            {
+                PhotoSearchExtras photoSearchExtras = new PhotoSearchExtras();
+
+                photoSearchExtras |= PhotoSearchExtras.OriginalUrl;
+                photoSearchExtras |= PhotoSearchExtras.Tags;
+
+                return photoSearchExtras;
+            }
+        }
+
         internal FlickrConnection(string apiKey, string apiSecret)
         {
             this.ApiKey = apiKey;
@@ -22,7 +35,34 @@
             this.Flickr = new Flickr(this.ApiKey, this.ApiSecret);
             this.Flickr.InstanceCacheDisabled = true;
 
+            // scope cache to this connection only
             this.MemoryCache = new MemoryCache(this.ApiKey + this.ApiSecret);
+        }
+
+        internal IEnumerable<FlickrImage> GetFlickrImagesInPhotoset(string photosetId)
+        {
+            List<FlickrImage> flickrImages = new List<FlickrImage>();
+
+            PhotosetPhotoCollection photosetPhotoCollection;
+
+            try
+            {
+                photosetPhotoCollection = this.Flickr.PhotosetsGetPhotos(photosetId, this.DefaultPhotoSearchExtras);
+            }
+            catch
+            {
+                photosetPhotoCollection = null;
+            }
+
+            if (photosetPhotoCollection != null)
+            {
+                foreach(Photo photo in photosetPhotoCollection)
+                {
+                    flickrImages.Add(this.CacheFlickrImage((FlickrImage)photo));
+                }
+            }
+
+            return flickrImages;
         }
 
         internal IEnumerable<FlickrImage> GetFlickrImages(PhotoSearchOptions photoSearchOptions)
@@ -30,7 +70,9 @@
             List<FlickrImage> flickrImages = new List<FlickrImage>();
 
             PhotoCollection photoCollection;
-            
+
+            //photoSearchOptions.Extras = this.DefaultPhotoSearchExtras;
+
             try
             {
                 photoCollection = this.Flickr.PhotosSearch(photoSearchOptions);

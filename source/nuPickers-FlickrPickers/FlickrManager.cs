@@ -50,7 +50,7 @@
         /// <returns></returns>
         internal static FlickrConnection GetFlickrConnection(string apiKey, string apiSecret)
         {
-            // internally use a singleton instance of FlickrManager
+            // get the singleton instance of FlickrManager
             FlickrManager flickrManager = lazy.Value;
 
             // try and get an existing connection
