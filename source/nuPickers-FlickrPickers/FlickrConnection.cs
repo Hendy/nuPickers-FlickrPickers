@@ -71,7 +71,7 @@
 
             PhotoCollection photoCollection;
 
-            //photoSearchOptions.Extras = this.DefaultPhotoSearchExtras;
+            photoSearchOptions.Extras = this.DefaultPhotoSearchExtras;
 
             try
             {

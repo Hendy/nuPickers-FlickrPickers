@@ -50,8 +50,6 @@ namespace nuPickers.FlickrPickers.DataSources
             PhotoSearchOptions photoSearchOptions = new PhotoSearchOptions();            
             photoSearchOptions.MediaType = MediaType.Photos;
             photoSearchOptions.SafeSearch = SafetyLevel.Safe;
-            photoSearchOptions.Extras |= PhotoSearchExtras.OriginalUrl;
-            photoSearchOptions.Extras |= PhotoSearchExtras.Tags;
             photoSearchOptions.SortOrder = PhotoSearchSortOrder.Relevance;
 
             if (!string.IsNullOrWhiteSpace(this.Tags))

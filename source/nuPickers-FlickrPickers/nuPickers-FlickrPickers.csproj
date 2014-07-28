@@ -217,7 +217,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="FlickrNet.chm" />
-    <Content Include="Views\PartialViewMacros\nuPickersFlickrPickers.cshtml" />
+    <Content Include="Views\MacroPartials\nuPickersFlickrPickers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />

@@ -21,7 +21,26 @@
   <DocumentTypes />
   <Templates />
   <Stylesheets />
-  <Macros />
+  <Macros>
+    <macro>
+      <name>nuPickers Flickr Pickers</name>
+      <alias>nuPickersFlickrPickers</alias>
+      <scriptType>
+      </scriptType>
+      <scriptAssembly>
+      </scriptAssembly>
+      <xslt>
+      </xslt>
+      <useInEditor>False</useInEditor>
+      <refreshRate>0</refreshRate>
+      <scriptingFile>~/Views/MacroPartials/nuPickersFlickrPickers.cshtml</scriptingFile>
+      <properties>
+        <property name="contextId" alias="contextId" propertyType="Umbraco.Textbox" />
+        <property name="propertyAlias" alias="propertyAlias" propertyType="Umbraco.Textbox" />
+        <property name="key" alias="key" propertyType="Umbraco.Textbox" />
+      </properties>
+    </macro>
+  </Macros>
   <DictionaryItems />
   <Languages />
   <DataTypes />
