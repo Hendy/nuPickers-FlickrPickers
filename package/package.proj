@@ -51,7 +51,7 @@
     <Copy SourceFiles="$(PackageDir)\package.xml" DestinationFolder="$(WorkingUmbracoDir)\" />
 
     <!-- COPY FOR NUGET PACKAGE -->
-    <Copy SourceFiles="$(ProjectDir)\Views\MacroPartials\nuPickersFlickrPickers.cshtml" DestinationFolder="$(WorkingNugetDir)\Views\MacroPartials\" />
+    <Copy SourceFiles="$(ProjectDir)\Views\MacroPartials\nuPickersFlickrPickers.cshtml" DestinationFolder="$(WorkingNugetDir)\content\Views\MacroPartials\" />
     <Copy SourceFiles="$(ProjectDir)\bin\nuPickers.FlickrPickers.dll" DestinationFolder="$(WorkingNugetDir)\lib\net45\" />
     <Copy SourceFiles="$(PackageDir)\package.nuspec" DestinationFolder="$(WorkingNuGetDir)\" />
   </Target>
