@@ -127,8 +127,8 @@
         /// <summary>
         /// Add the flickrImage to the cache
         /// </summary>
-        /// <param name="flickrImage"></param>
-        /// <returns></returns>
+        /// <param name="flickrImage">the flickrImage to be cached</param>
+        /// <returns>the same flickrImage</returns>
         private FlickrImage CacheFlickrImage(FlickrImage flickrImage)
         {
             this.MemoryCache.Set(

@@ -18,7 +18,7 @@ namespace nuPickers.FlickrPickers.DataSources
         [DotNetDataSource(Title = "Flickr API Secret", Description = "(required)")]
         public string ApiSecret { get; set; }
 
-        [DotNetDataSource(Title = "Flickr Username", Description = "photos from this this user")]
+        [DotNetDataSource(Title = "Flickr Username", Description = "(screen name)")]
         public string Username { get; set; }  
 
         [DotNetDataSource(Description="comma delimited list of tags")]
