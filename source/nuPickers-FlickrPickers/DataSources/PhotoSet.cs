@@ -5,7 +5,7 @@ namespace nuPickers.FlickrPickers.DataSources
     using System.Collections.Generic;
     using System.Linq;
 
-    public class PhotoSet : IDotNetDataSource
+    public class Photoset : IDotNetDataSource
     {
         [DotNetDataSource(Title = "Flickr API Key", Description = "(required)")]
         public string ApiKey { get; set; }
