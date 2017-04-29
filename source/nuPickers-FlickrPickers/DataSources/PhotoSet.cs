@@ -16,7 +16,12 @@ namespace nuPickers.FlickrPickers.DataSources
         [DotNetDataSource(Title = "Photoset Id", Description = "(can be found in Flickr url)")]
         public string PhotosetId { get; set; }  
 
-        IEnumerable<KeyValuePair<string, string>> IDotNetDataSource.GetEditorDataItems()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contextId"></param>
+        /// <returns></returns>
+        IEnumerable<KeyValuePair<string, string>> IDotNetDataSource.GetEditorDataItems(int contextId)
         {
             return FlickrManager.GetFlickrConnection(this.ApiKey, this.ApiSecret)
                        .GetFlickrImagesInPhotoset(this.PhotosetId)

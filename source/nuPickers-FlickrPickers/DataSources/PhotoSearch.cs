@@ -43,8 +43,9 @@ namespace nuPickers.FlickrPickers.DataSources
         /// <summary>
         /// This is the main method called from the DotNetDataSource
         /// </summary>
+        /// <param name="contextId"></param>
         /// <returns>a collection of key / labels for the picker</returns>
-        IEnumerable<KeyValuePair<string, string>> IDotNetDataSource.GetEditorDataItems()
+        IEnumerable<KeyValuePair<string, string>> IDotNetDataSource.GetEditorDataItems(int contextId)
         {
             // begin query
             PhotoSearchOptions photoSearchOptions = new PhotoSearchOptions();            
