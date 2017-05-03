@@ -65,6 +65,35 @@
             return flickrImages;
         }
 
+        internal IEnumerable<FlickrImage> GetFlickrImagesInPhotoset(string photosetId, int itemsPerPage, int page, out int total)
+        {
+            List<FlickrImage> flickrImages = new List<FlickrImage>();
+            total = -1;
+
+            PhotosetPhotoCollection photosetPhotoCollection;
+
+            try
+            {
+                photosetPhotoCollection = this.Flickr.PhotosetsGetPhotos(photosetId, this.DefaultPhotoSearchExtras, page, itemsPerPage);
+            }
+            catch
+            {
+                photosetPhotoCollection = null;
+            }
+
+            if (photosetPhotoCollection != null)
+            {
+                foreach (Photo photo in photosetPhotoCollection)
+                {
+                    flickrImages.Add(this.CacheFlickrImage((FlickrImage)photo));
+                }
+
+                total = photosetPhotoCollection.Total;
+            }
+
+            return flickrImages;
+        }
+
         internal IEnumerable<FlickrImage> GetFlickrImages(PhotoSearchOptions photoSearchOptions)
         {
             List<FlickrImage> flickrImages = new List<FlickrImage>();
