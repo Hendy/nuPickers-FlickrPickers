@@ -3,16 +3,27 @@
     using nuPickers.Shared.DotNetDataSource;
     using System.Collections.Generic;
     using System.Linq;
-    using System;
 
+    /// <summary>
+    /// nuPickers DotNetDataSource for a Flickr Photoset
+    /// </summary>
     public class Photoset : IDotNetDataSource, IDotNetDataSourcePaged
     {
+        /// <summary>
+        /// Umbraco back-office configuration option - the Flickr Api Key
+        /// </summary>
         [DotNetDataSource(Title = "Flickr API Key", Description = "(required)")]
         public string ApiKey { get; set; }
 
+        /// <summary>
+        /// Umbraco back-office configuration option - the Flickr Api Secret
+        /// </summary>
         [DotNetDataSource(Title = "Flickr API Secret", Description = "(required)")]
         public string ApiSecret { get; set; }
 
+        /// <summary>
+        /// Umbraco back-office configuration option - a Flickr photoset id
+        /// </summary>
         [DotNetDataSource(Title = "Photoset Id", Description = "(can be found in Flickr url)")]
         public string PhotosetId { get; set; }
 

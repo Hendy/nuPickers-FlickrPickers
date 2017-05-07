@@ -1,79 +1,92 @@
-﻿
-namespace nuPickers.FlickrPickers.DataSources
+﻿namespace nuPickers.FlickrPickers.DataSources
 {
     using FlickrNet;
     using nuPickers.Shared.DotNetDataSource;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
 
     /// <summary>
-    /// Implementing IDotNetDataSource, enables this class to be used with any "nuPicker: DotNet ... Picker"
-    /// Implementing IDotNetDataSourceTypeahead, enables this class to recieve any typeahead text from a "nuPicker DotNet TypeaheadList Picker"
+    /// nuPickers DotNetDataSource for searching Flickr images
     /// </summary>
-    public class PhotoSearch : IDotNetDataSource, IDotNetDataSourceTypeahead
+    public class PhotoSearch : IDotNetDataSource, IDotNetDataSourceTypeahead, IDotNetDataSourceKeyed
     {
+        /// <summary>
+        /// Umbraco back-office configuration option - 
+        /// </summary>
         [DotNetDataSource(Title = "Flickr API Key", Description = "(required)")]
         public string ApiKey { get; set; }
 
+        /// <summary>
+        /// Umbraco back-office configuration option - 
+        /// </summary>
         [DotNetDataSource(Title = "Flickr API Secret", Description = "(required)")]
         public string ApiSecret { get; set; }
 
+        /// <summary>
+        /// Umbraco back-office configuration option - 
+        /// </summary>
         [DotNetDataSource(Title = "Flickr Username", Description = "(screen name)")]
-        public string Username { get; set; }  
+        public string Username { get; set; }
 
+        /// <summary>
+        /// Umbraco back-office configuration option - 
+        /// </summary>
         [DotNetDataSource(Description="comma delimited list of tags")]
         public string Tags { get; set; }
 
         /// <summary>
-        /// The current typeahead text (this is only set if using a DotNet TypeaheadList Picker)
+        /// IDotNetDataSourceTypeahead - Any typeahead text
         /// </summary>
-        string IDotNetDataSourceTypeahead.Typeahead { get; set; }
+        public string Typeahead { get; set; }
 
         /// <summary>
-        /// Helper to get at the Typeahead value
+        /// IDotNetDataSourceKeyed
         /// </summary>
-        private string Typeahead
-        {
-            get
-            {
-                return ((IDotNetDataSourceTypeahead)this).Typeahead;
-            }
-        }
+        [DefaultValue(null)]
+        public string[] Keys { private get; set; }
 
         /// <summary>
-        /// This is the main method called from the DotNetDataSource
+        /// This is the query method called from the DotNetDataSource
         /// </summary>
         /// <param name="contextId"></param>
         /// <returns>a collection of key / labels for the picker</returns>
-        IEnumerable<KeyValuePair<string, string>> IDotNetDataSource.GetEditorDataItems(int contextId)
+        public IEnumerable<KeyValuePair<string, string>> GetEditorDataItems(int contextId)
         {
-            // begin query
-            PhotoSearchOptions photoSearchOptions = new PhotoSearchOptions();            
-            photoSearchOptions.MediaType = MediaType.Photos;
-            photoSearchOptions.SafeSearch = SafetyLevel.Safe;
-            photoSearchOptions.SortOrder = PhotoSearchSortOrder.Relevance;
+            var flickrConnection = FlickrManager.GetFlickrConnection(this.ApiKey, this.ApiSecret);
+            IEnumerable<FlickrImage> flickrImages;
 
-            if (!string.IsNullOrWhiteSpace(this.Tags))
+            if (this.Keys != null)
             {
-                photoSearchOptions.TagMode = TagMode.AllTags;
-                photoSearchOptions.Tags = this.Tags;
+                flickrImages = this.Keys.Select(x => flickrConnection.GetFlickrImage(x));
+            }
+            else
+            {
+                PhotoSearchOptions photoSearchOptions = new PhotoSearchOptions();
+                photoSearchOptions.MediaType = MediaType.Photos;
+                photoSearchOptions.SafeSearch = SafetyLevel.Safe;
+                photoSearchOptions.SortOrder = PhotoSearchSortOrder.Relevance;
+
+                if (!string.IsNullOrWhiteSpace(this.Tags))
+                {
+                    photoSearchOptions.TagMode = TagMode.AllTags;
+                    photoSearchOptions.Tags = this.Tags;
+                }
+
+                if (!string.IsNullOrWhiteSpace(this.Username))
+                {
+                    photoSearchOptions.Username = this.Username;
+                }
+
+                if (!string.IsNullOrWhiteSpace(this.Typeahead))
+                {
+                    photoSearchOptions.Text = this.Typeahead;
+                }
+
+                flickrImages = flickrConnection.GetFlickrImages(photoSearchOptions);                                
             }
 
-            if (!string.IsNullOrWhiteSpace(this.Username))
-            {
-                photoSearchOptions.Username = this.Username;
-            }
-
-            // if being used by a typeahead picker...
-            if (!string.IsNullOrWhiteSpace(this.Typeahead))
-            {
-                photoSearchOptions.Text = this.Typeahead;
-            }
-
-            return FlickrManager.GetFlickrConnection(this.ApiKey, this.ApiSecret)
-                                .GetFlickrImages(photoSearchOptions)
-                                .Select(x => new KeyValuePair<string, string>(x.PhotoId, "<img src='" + x.SquareThumbnailUrl + "' />"));
+            return flickrImages.Select(x => new KeyValuePair<string, string>(x.PhotoId, "<img src='" + x.SquareThumbnailUrl + "' />"));
         }
-
     }
 }
